@@ -31,21 +31,27 @@ module.exports = function(config) {
     // 激活覆盖率报告器
     reporters: ["progress", "coverage"],
     // optionally, configure the reporter
+    // coverageReporter: {
+    //   reporters: [
+    //     {
+    //       type: "html",
+    //       dir: "coverage/",
+    //       subdir: "."
+    //       // Would output the results into: .'/coverage/'
+    //     },
+    //     {
+    //       // 这就是Codecov支持的文件类型
+    //       type: "cobertura",
+    //       subdir: ".",
+    //       dir: "coverage/"
+    //     }
+    //   ]
+    // },
     coverageReporter: {
-      reporters: [
-        {
-          type: "html",
-          dir: "coverage/",
-          subdir: "."
-          // Would output the results into: .'/coverage/'
-        },
-        {
-          // 这就是Codecov支持的文件类型
-          type: "cobertura",
-          subdir: ".",
-          dir: "coverage/"
-        }
-      ]
+      type: "lcov",
+      dir: "coverage/",
+      subdir: "."
+      // Would output the results into: .'/coverage/'
     },
     // web server port
     port: 9876,
