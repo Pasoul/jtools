@@ -17,4 +17,4 @@ branches:
     - master
     - production
 before_deploy:
-  - npm run build
+  - yarn run build
