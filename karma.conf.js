@@ -32,10 +32,20 @@ module.exports = function(config) {
     reporters: ["progress", "coverage"],
     // optionally, configure the reporter
     coverageReporter: {
-      type: "html",
-      dir: "coverage/",
-      subdir: "."
-      // Would output the results into: .'/coverage/'
+      reporters: [
+        {
+          type: "html",
+          dir: "coverage/",
+          subdir: "."
+          // Would output the results into: .'/coverage/'
+        },
+        {
+          // 这就是Codecov支持的文件类型
+          type: "cobertura",
+          subdir: ".",
+          dir: "coverage/"
+        }
+      ]
     },
     // web server port
     port: 9876,
