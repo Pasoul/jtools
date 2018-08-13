@@ -9,12 +9,9 @@ install:
   - yarn install
 script:
   - yarn test
-after_success:
-  - cat ./coverage/lcov.info | node_modules/.bin/coveralls --verbose
-  #指定分支，只有指定的分支提交时才会运行脚本
+# after_success:
+#   - cat ./coverage/lcov.info | node_modules/.bin/coveralls --verbose
+#指定分支，只有指定的分支提交时才会运行脚本
 branches:
   only:
     - master
-    - production
-before_deploy:
-  - ssh-agent -k
