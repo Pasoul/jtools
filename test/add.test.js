@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 var assert = chai.assert;
 
 describe("test", function() {

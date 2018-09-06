@@ -1,3 +1,3 @@
-export const decrease = function(a, b) {
+export const decrease = (a, b) => {
   return a - b;
 };
