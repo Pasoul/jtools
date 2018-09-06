@@ -1,4 +1,4 @@
-const webpakck = require("webpack");
+const webpack = require("webpack");
 const { resolve } = require("path");
 
 const pkg = require("../package.json");
