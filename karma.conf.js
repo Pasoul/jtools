@@ -1,6 +1,32 @@
 // Karma configuration
 // Generated on Mon Aug 13 2018 11:55:46 GMT+0800 (CST)
-
+var webpack = require("webpack");
+var path = require("path");
+var webpackConfig = {
+  resolve: {
+    extensions: [".js"],
+    alias: {
+      "@": path.resolve(__dirname, "./src")
+    }
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        loader: "babel-loader",
+        exclude: /node_modules/
+      }
+    ]
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      "process.env": {
+        NODE_ENV: '"test"'
+      }
+    })
+  ],
+  devtool: "#inline-source-map"
+};
 module.exports = function(config) {
   config.set({
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -12,41 +38,37 @@ module.exports = function(config) {
 
     // 定义测试和被测代码文件
     // list of files / patterns to load in the browser
-    files: ["dist/*.min.js", "test/*.test.js"],
+    files: ["src/index.js", "test/*.test.js"],
 
     // list of files / patterns to exclude
     exclude: [],
-
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     // 配置预处理器，哪些文件需要统计测试覆盖率
-    // 因为测试文件我们通过obj[key]的方式调用方法，这里统计打包好的min.js，框架会为我们引入obj
-    // preprocessors: {
-    //   "dist/*.min.js": "coverage"
-    // },
-
+    preprocessors: {
+      "./src/index.js": ["webpack", "sourcemap"],
+      "./test/*.js": ["webpack", "sourcemap"]
+    },
+    webpack: webpackConfig,
+    webpackMiddleware: {
+      noInfo: true
+    },
+    plugins: [
+      "karma-chrome-launcher",
+      "karma-phantomjs-launcher",
+      "karma-phantomjs-shim",
+      "karma-mocha",
+      "karma-coverage",
+      "karma-chai",
+      "karma-babel-preprocessor",
+      "karma-webpack",
+      "karma-sourcemap-loader"
+    ],
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     // 激活覆盖率报告器
     reporters: ["progress", "coverage"],
-    // optionally, configure the reporter
-    // coverageReporter: {
-    //   reporters: [
-    //     {
-    //       type: "html",
-    //       dir: "coverage/",
-    //       subdir: "."
-    //       // Would output the results into: .'/coverage/'
-    //     },
-    //     {
-    //       // 这就是Codecov支持的文件类型
-    //       type: "cobertura",
-    //       subdir: ".",
-    //       dir: "coverage/"
-    //     }
-    //   ]
-    // },
     coverageReporter: {
       type: "lcov",
       dir: "coverage/",
