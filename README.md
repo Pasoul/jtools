@@ -1,7 +1,7 @@
 ## jlb-tools
 
 [![Build Status](https://travis-ci.com/Pasoul/jtools.svg?branch=master)](https://travis-ci.com/Pasoul/jtools)
-[![Coverage Status](https://coveralls.io/repos/github/Pasoul/jtools/badge.svg)](https://coveralls.io/github/Pasoul/jtools)
+[![Coverage Status](https://coveralls.io/repos/github/Pasoul/jtools/badge.svg?branch=master)](https://coveralls.io/github/Pasoul/jtools?branch=master)
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
 [![Eclipse Marketplace](https://img.shields.io/eclipse-marketplace/dt/notepad4e.svg)](https://www.npmjs.com/package/jib-tools)
 ![NpmVersion](https://img.shields.io/npm/v/npm.svg)
