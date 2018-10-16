@@ -10,7 +10,8 @@
   },
   "scripts": {
     "build": "node script/rollup.build.js",
-    "test": "NODE_ENV=test karma start"
+    "test": "NODE_ENV=test karma start",
+    "doc": "jsdoc -r --readme README.md -c conf.json"
   },
   "keywords": [
     "jlb",
@@ -22,9 +23,9 @@
   "author": "py419569317",
   "devDependencies": {
     "@babel/core": "^7.0.0",
-    "@babel/plugin-transform-runtime": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "babel-core": "^6.26.3",
+    "babel-eslint": "^9.0.0",
     "babel-loader": "^8.0.2",
     "babel-plugin-istanbul": "^5.0.1",
     "chai": "^4.1.2",

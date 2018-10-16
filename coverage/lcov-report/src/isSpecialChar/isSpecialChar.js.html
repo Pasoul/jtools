@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for src/add/add.js</title>
+    <title>Code coverage report for src/isSpecialChar/isSpecialChar.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -16,18 +16,18 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="../../index.html">all files</a> / <a href="index.html">src/add/</a> add.js
+      <a href="../../index.html">all files</a> / <a href="index.html">src/isSpecialChar/</a> isSpecialChar.js
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>2/2</span>
+        <span class='fraction'>3/3</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/0</span>
+        <span class='fraction'>2/2</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -37,7 +37,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>2/2</span>
+        <span class='fraction'>3/3</span>
       </div>
     </div>
   </div>
@@ -52,24 +52,36 @@
 7
 8
 9
-10</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+10
+11
+12
+13
+14</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4×</span>
-<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">4×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
- * @description 两个数字详解
- * @param {Number} a 数字a
- * @param {Number} b 数字b
- * @return {Number} 两个数字相加结果
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/* @flow */
+/**
+ * @description 检查是否为特殊字符
+ * @author pengyong
+ * @param {*} value 正则校验的变量
+ * @returns {Boolean} 正则校验结果
  */
-export const add = (a, b) =&gt; {
-  return a + b;
-};
+export function isSpecialChar(value: string): boolean {
+	var regEn = /[`~!@#$%^&amp;*()_+&lt;&gt;?:"{},.\/;'[\]\s]/im;
+	var regCn = /[·！#￥（——）：；“”‘、，|《。》？、【】[\]\s]/im;
+&nbsp;
+	return regEn.test(value) || regCn.test(value);
+}
 &nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->

@@ -17,6 +17,7 @@ const resolve = p => {
 
 const banner = "/*!\n" + " * jtools v" + pkg.version + "\n" + " * jlb web team\n" + " */";
 
+// 分别编译三种运行环境的包:commonjs、es module、umd
 const builds = {
   common: {
     entry: resolve("src/index.js"),
@@ -41,13 +42,14 @@ const builds = {
 
 function getConfig(name) {
   const opts = builds[name];
+  // 构建rollup执行的config
   const config = {
     input: opts.entry,
     plugins: [
-      buble(),
-      node(),
-      commonjs(),
-      json(),
+      // buble(),
+      // node(),
+      // commonjs(),
+      // json(),
       babel({
         exclude: "node_modules/**",
         babelrc: false, // 不读取babelrc文件
