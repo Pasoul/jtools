@@ -1504,7 +1504,7 @@ function isEmoji(value) {
  * @param {*} idcard 身份证号码
  * @return {boolean} 验证结果true/false
  */
-function checkIDCard(idcard) {
+function isIDCard(idcard) {
   var reg = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
   return reg.test(idcard);
 }
@@ -1520,8 +1520,6 @@ function isSpecialChar(value) {
   var regCn = /[·！#￥（——）：；“”‘、，|《。》？、【】[\]\s]/im;
   return regEn.test(value) || regCn.test(value);
 }
-
-// 正则匹配
 
 /**
  * utf16字符串转实体字符
@@ -1620,6 +1618,4 @@ function handleText() {
   return newStr;
 }
 
-// 字符串转义与解析
-
-export { getImgBase64, dateFormat1, dateFormat2, getBrowserModel, getDeviceModel, getThumbnails, getDefaultHeader, isEmoji, checkIDCard, isSpecialChar, handleEmoji, handleText };
+export { getImgBase64, dateFormat1, dateFormat2, getBrowserModel, getDeviceModel, getThumbnails, getDefaultHeader, isEmoji, isIDCard, isSpecialChar, handleEmoji, handleText };

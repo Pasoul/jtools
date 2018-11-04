@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for src/.internal/entitiestoUtf16.js</title>
+    <title>Code coverage report for src/transfer/handleText.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -16,18 +16,18 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="../../index.html">all files</a> / <a href="index.html">src/.internal/</a> entitiestoUtf16.js
+      <a href="../../index.html">all files</a> / <a href="index.html">src/transfer/</a> handleText.js
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/14</span>
+        <span class='fraction'>0/8</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/4</span>
+        <span class='fraction'>0/8</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
@@ -37,7 +37,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">0% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/13</span>
+        <span class='fraction'>0/7</span>
       </div>
     </div>
   </div>
@@ -67,7 +67,29 @@
 22
 23
 24
-25</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+25
+26
+27
+28</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -75,47 +97,34 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {utf16toEntities} from './utf16toEntities'
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { utf16toEntities } from "../.internal/utf16toEntities";
+import { entitiestoUtf16 } from "../.internal/entitiestoUtf16";
+&nbsp;
 /**
- * 实体字符转utf16字符串
- * @param {*} str 待转义的字符串
+ * @description 处理文本，客户端无法识别h5的br标签和空格符，因此需要处理br标签为\n和空格符为 ''
+ * @param {string} str 需要编译/转义的字符串
+ * @param {string} type encode 编译 decode 转义
+ * @returns {string} 编译/转义后的字符串
  */
-export function entitiestoUtf16(str) <span class="fstat-no" title="function not covered" >{</span>
+export function handleText(str = "", type = "encode") <span class="fstat-no" title="function not covered" >{</span>
 <span class="cstat-no" title="statement not covered" >  if (!str) <span class="cstat-no" title="statement not covered" >return "";</span></span>
-  // 检测出形如&amp;#12345;形式的字符串
-  var strObj = <span class="cstat-no" title="statement not covered" >utf16toEntities(str);</span>
-  var patt = <span class="cstat-no" title="statement not covered" >/&amp;#\d+;/g;</span>
-  var H, L, code;
-  var arr = <span class="cstat-no" title="statement not covered" >strObj.match(patt) || [];</span>
-<span class="cstat-no" title="statement not covered" >  for (var i = 0; i &lt; arr.length; i++) {</span>
-<span class="cstat-no" title="statement not covered" >    code = arr[i];</span>
-<span class="cstat-no" title="statement not covered" >    code = code.replace("&amp;#", "").replace(";", "");</span>
-    // 高位
-<span class="cstat-no" title="statement not covered" >    H = Math.floor((code - 0x10000) / 0x400) + 0xd800;</span>
-    // 低位
-<span class="cstat-no" title="statement not covered" >    L = ((code - 0x10000) % 0x400) + 0xdc00;</span>
-<span class="cstat-no" title="statement not covered" >    code = "&amp;#" + code + ";";</span>
-    var s = <span class="cstat-no" title="statement not covered" >String.fromCharCode(H, L);</span>
-<span class="cstat-no" title="statement not covered" >    strObj = strObj.replace(code, s);</span>
+  let newStr = <span class="cstat-no" title="statement not covered" >null;</span>
+<span class="cstat-no" title="statement not covered" >  if (type === "encode") {</span>
+<span class="cstat-no" title="statement not covered" >    newStr = entitiestoUtf16(str)</span>
+      .replace(/&lt;br&gt;/gi, "\n")
+      .replace(/&amp;nbsp;/g, " ")
+      .replace("&amp;lt;", "&lt;")
+      .replace("&amp;gt;", "&gt;");
+  } else <span class="cstat-no" title="statement not covered" >if (type === "decode") {</span>
+<span class="cstat-no" title="statement not covered" >    newStr = utf16toEntities(str)</span>
+      .replace("&lt;", "&amp;lt;")
+      .replace("&gt;", "&amp;gt;")
+      .replace(/\n|\r\n/g, "&lt;br&gt;")
+      .replace(/[ ]/g, "&amp;nbsp;");
   }
-<span class="cstat-no" title="statement not covered" >  return strObj;</span>
-}</pre></td></tr>
+<span class="cstat-no" title="statement not covered" >  return newStr;</span>
+}
+&nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
