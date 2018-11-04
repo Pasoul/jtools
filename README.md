@@ -51,3 +51,12 @@ var result = jtools.add(1, 2);
 ### 扩展
 
 如果你想添加自己的工具库，在 `src` 目录创建文件，对应 `test` 目录添加测试用例，执行 `yarn test`
+
+### 贡献方法
+
+- fork 本仓库到自己账户。
+- 新建一个分支来开始您的工作，分支的名字为 `feature_功能名称` 或者 `buxfix_issueId`。
+- 完成功能后请在 test 目录添加完整测试。
+- 完成后，发送一个 pull request 到 Pasoul/jtools。
+- 等待核心开发者做 CodeReview。
+- 最后，恭喜你贡献成功。
