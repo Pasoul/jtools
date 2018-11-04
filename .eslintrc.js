@@ -1,4 +1,8 @@
 // 0 忽略 1 警告 2 错误
+/**
+ * no-unneeded-ternary Unnecessary use of conditional expression for default assignment
+ * val ? val : defaultVal可以用val || defaultVal代替三元表达式
+ */
 module.exports = {
 	extends: 'standard',
 	// 让eslint支持es6语法
@@ -13,6 +17,6 @@ module.exports = {
 		// eslint认可Tab打空格
 		'no-tabs': 'off',
 		// 不校验缩进
-		indent: 'off'
+    indent: 'off'
 	}
 };

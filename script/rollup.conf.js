@@ -2,13 +2,11 @@
 const pkg = require("../package.json");
 const path = require("path");
 // rollup不会主动寻找node_modules文件夹下的安装包
-// rollup-plugin-node-resolve可以告诉rollup如何查找外部模块
-const node = require("rollup-plugin-node-resolve");
+// rollup-plugin-node-resolve可以告诉rollup如何正确的查找模块
+const nodeResolve = require("rollup-plugin-node-resolve");
 // npm包大多是commonjs规范，需要将commonjs模块转换为es6供rollup处理
 const commonjs = require("rollup-plugin-commonjs");
 const babel = require("rollup-plugin-babel");
-const json = require("rollup-plugin-json");
-const buble = require("rollup-plugin-buble");
 const packageName = pkg.config.packageName;
 
 const resolve = p => {
@@ -46,14 +44,17 @@ function getConfig(name) {
   const config = {
     input: opts.entry,
     plugins: [
-      // buble(),
-      // node(),
-      // commonjs(),
-      // json(),
+      // 如果项目引入node_modules第三方插件，需要打开此配置
+      commonjs({
+        namedExports: {
+          "node_modules/core-js/library/modules/es6.object.to-string.js": ["default"]
+        }
+      }),
+      nodeResolve(),
       babel({
         exclude: "node_modules/**",
         babelrc: false, // 不读取babelrc文件
-        presets: [["@babel/env", { modules: false }]], // 设置modules: false,否则babel会子啊rollup处理之前，把模块转移成commonjs风格，导致tree-shake失败
+        presets: [["@babel/env", { modules: false }]], // 设置modules: false,否则babel会在rollup处理之前，把模块转移成commonjs风格，导致tree-shake失败
         runtimeHelpers: true,
         plugins: [
           [
