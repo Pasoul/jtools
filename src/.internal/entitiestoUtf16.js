@@ -1,10 +1,14 @@
-import {utf16toEntities} from './utf16toEntities'
+import { utf16toEntities } from "./utf16toEntities";
 /**
  * 实体字符转utf16字符串
- * @param {*} str 待转义的字符串
+ * @param {*} str 待解析的字符串
  */
 export function entitiestoUtf16(str) {
   if (!str) return "";
+  if (typeof str !== "string") {
+    console.error("需要解析的数据类型需要是字符串类型");
+    return str;
+  }
   // 检测出形如&#12345;形式的字符串
   var strObj = utf16toEntities(str);
   var patt = /&#\d+;/g;

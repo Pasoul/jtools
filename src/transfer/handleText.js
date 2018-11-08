@@ -9,6 +9,11 @@ import { entitiestoUtf16 } from "../.internal/entitiestoUtf16";
  */
 export function handleText(str = "", type = "encode") {
   if (!str) return "";
+  if (typeof str !== "string") {
+    console.error("handleText数据类型需要是字符串类型");
+    return str;
+  }
+  /* eslint-disable no-unused-vars */
   let newStr = null;
   if (type === "encode") {
     newStr = entitiestoUtf16(str)
@@ -22,6 +27,8 @@ export function handleText(str = "", type = "encode") {
       .replace(">", "&gt;")
       .replace(/\n|\r\n/g, "<br>")
       .replace(/[ ]/g, "&nbsp;");
+  } else {
+    return str;
   }
   return newStr;
 }

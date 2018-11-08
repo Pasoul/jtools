@@ -1,9 +1,13 @@
 /**
  * utf16字符串转实体字符
- * @param {string} str 待转义的字符串 
+ * @param {string} str 待编译的字符串
  */
 export function utf16toEntities(str) {
   if (!str) return "";
+  if (typeof str !== "string") {
+    console.error("需要编译的数据类型需要是字符串类型");
+    return str;
+  }
   var patt = /[\ud800-\udbff][\udc00-\udfff]/g;
   // 检测utf16字符正则
   str = str.replace(patt, function(char) {

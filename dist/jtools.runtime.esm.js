@@ -1,5 +1,5 @@
 /*!
- * jtools v0.0.2
+ * jtools v0.0.3
  * jlb web team
  */
 // 7.1.4 ToInteger
@@ -1523,10 +1523,16 @@ function isSpecialChar(value) {
 
 /**
  * utf16字符串转实体字符
- * @param {string} str 待转义的字符串 
+ * @param {string} str 待编译的字符串
  */
 function utf16toEntities(str) {
   if (!str) return "";
+
+  if (typeof str !== "string") {
+    console.error("需要编译的数据类型需要是字符串类型");
+    return str;
+  }
+
   var patt = /[\ud800-\udbff][\udc00-\udfff]/g; // 检测utf16字符正则
 
   str = str.replace(patt, function (char) {
@@ -1549,11 +1555,17 @@ function utf16toEntities(str) {
 
 /**
  * 实体字符转utf16字符串
- * @param {*} str 待转义的字符串
+ * @param {*} str 待解析的字符串
  */
 
 function entitiestoUtf16(str) {
-  if (!str) return ""; // 检测出形如&#12345;形式的字符串
+  if (!str) return "";
+
+  if (typeof str !== "string") {
+    console.error("需要解析的数据类型需要是字符串类型");
+    return str;
+  } // 检测出形如&#12345;形式的字符串
+
 
   var strObj = utf16toEntities(str);
   var patt = /&#\d+;/g;
@@ -1577,15 +1589,23 @@ function entitiestoUtf16(str) {
 
 /**
  * @description 处理emoji，用于把用utf16编码的字符转换成实体字符
- * @param {string} str 需要编译/转义的字符串
+ * @param {string} str 需要编译/解析的字符串
  * @param {string} type encode 编译 decode 转义
- * @returns {string} 编译/转义后的字符串
+ * @returns {string} 编译/解析后的字符串
+ * @example
+ * handleEmoji("😃", "encode") => "&#128515;"
+ * handleEmoji("&#128522;", "decode") => "😊"
  */
 
 function handleEmoji() {
   var str = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
   var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "encode";
   if (!str) return "";
+
+  if (typeof str !== "string") {
+    console.error("handleEmoji数据类型需要是字符串类型");
+    return str;
+  }
 
   if (type === "encode") {
     return utf16toEntities(str);
@@ -1607,12 +1627,22 @@ function handleText() {
   var str = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
   var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "encode";
   if (!str) return "";
+
+  if (typeof str !== "string") {
+    console.error("handleText数据类型需要是字符串类型");
+    return str;
+  }
+  /* eslint-disable no-unused-vars */
+
+
   var newStr = null;
 
   if (type === "encode") {
     newStr = entitiestoUtf16(str).replace(/<br>/gi, "\n").replace(/&nbsp;/g, " ").replace("&lt;", "<").replace("&gt;", ">");
   } else if (type === "decode") {
     newStr = utf16toEntities(str).replace("<", "&lt;").replace(">", "&gt;").replace(/\n|\r\n/g, "<br>").replace(/[ ]/g, "&nbsp;");
+  } else {
+    return str;
   }
 
   return newStr;

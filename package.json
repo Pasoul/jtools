@@ -1,12 +1,13 @@
 {
   "name": "jlb-tools",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "js工具库",
   "main": "dist/jtools.runtime.common.js",
   "module": "dist/jtools.runtime.esm.js",
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime-corejs2": "^7.0.0"
+    "@babel/runtime-corejs2": "^7.0.0",
+    "es6-promise": "^4.2.5"
   },
   "scripts": {
     "build": "node script/rollup.build.js",

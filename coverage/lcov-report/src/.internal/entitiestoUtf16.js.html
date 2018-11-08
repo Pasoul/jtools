@@ -20,28 +20,28 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">82.35% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>0/14</span>
+        <span class='fraction'>14/17</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">66.67% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/4</span>
+        <span class='fraction'>4/6</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/1</span>
+        <span class='fraction'>1/1</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">87.5% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>0/13</span>
+        <span class='fraction'>14/16</span>
       </div>
     </div>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -67,61 +67,76 @@
 22
 23
 24
-25</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+25
+26
+27
+28
+29
+30</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {utf16toEntities} from './utf16toEntities'
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { utf16toEntities } from "./utf16toEntities";
 /**
  * 实体字符转utf16字符串
- * @param {*} str 待转义的字符串
+ * @param {*} str 待解析的字符串
  */
-export function entitiestoUtf16(str) <span class="fstat-no" title="function not covered" >{</span>
-<span class="cstat-no" title="statement not covered" >  if (!str) <span class="cstat-no" title="statement not covered" >return "";</span></span>
-  // 检测出形如&amp;#12345;形式的字符串
-  var strObj = <span class="cstat-no" title="statement not covered" >utf16toEntities(str);</span>
-  var patt = <span class="cstat-no" title="statement not covered" >/&amp;#\d+;/g;</span>
-  var H, L, code;
-  var arr = <span class="cstat-no" title="statement not covered" >strObj.match(patt) || [];</span>
-<span class="cstat-no" title="statement not covered" >  for (var i = 0; i &lt; arr.length; i++) {</span>
-<span class="cstat-no" title="statement not covered" >    code = arr[i];</span>
-<span class="cstat-no" title="statement not covered" >    code = code.replace("&amp;#", "").replace(";", "");</span>
-    // 高位
-<span class="cstat-no" title="statement not covered" >    H = Math.floor((code - 0x10000) / 0x400) + 0xd800;</span>
-    // 低位
-<span class="cstat-no" title="statement not covered" >    L = ((code - 0x10000) % 0x400) + 0xdc00;</span>
-<span class="cstat-no" title="statement not covered" >    code = "&amp;#" + code + ";";</span>
-    var s = <span class="cstat-no" title="statement not covered" >String.fromCharCode(H, L);</span>
-<span class="cstat-no" title="statement not covered" >    strObj = strObj.replace(code, s);</span>
+export function entitiestoUtf16(str) {
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (!str) <span class="cstat-no" title="statement not covered" >return "";</span>
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (typeof str !== "string") {
+<span class="cstat-no" title="statement not covered" >    console.error("需要解析的数据类型需要是字符串类型");</span>
+<span class="cstat-no" title="statement not covered" >    return str;</span>
   }
-<span class="cstat-no" title="statement not covered" >  return strObj;</span>
-}</pre></td></tr>
+  // 检测出形如&amp;#12345;形式的字符串
+  var strObj = utf16toEntities(str);
+  var patt = /&amp;#\d+;/g;
+  var H, L, code;
+  var arr = strObj.match(patt) || [];
+  for (var i = 0; i &lt; arr.length; i++) {
+    code = arr[i];
+    code = code.replace("&amp;#", "").replace(";", "");
+    // 高位
+    H = Math.floor((code - 0x10000) / 0x400) + 0xd800;
+    // 低位
+    L = ((code - 0x10000) % 0x400) + 0xdc00;
+    code = "&amp;#" + code + ";";
+    var s = String.fromCharCode(H, L);
+    strObj = strObj.replace(code, s);
+  }
+  return strObj;
+}
+&nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Nov 04 2018 22:18:04 GMT+0800 (CST)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Nov 08 2018 18:32:24 GMT+0800 (CST)
 </div>
 </div>
 <script src="../../prettify.js"></script>
