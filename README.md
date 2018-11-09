@@ -10,8 +10,9 @@
 
 前端 js 工具库: 封装常用的工具函数，如日期格式化、浏览器判断等，提高开发效率
 
-[Document](https://pasoul.github.io/jtools/api-docs/)
-[Coverage](https://pasoul.github.io/jtools/lcov-report/)
+[Document](https://pasoul.github.io/jtools/api-docs/)  
+
+[Coverage](https://pasoul.github.io/jtools/coverage/lcov-report/)
 
 ### 如何使用:
 
