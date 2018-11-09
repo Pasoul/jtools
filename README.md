@@ -10,6 +10,9 @@
 
 前端 js 工具库: 封装常用的工具函数，如日期格式化、浏览器判断等，提高开发效率
 
+[Document](https://pasoul.github.io/jtools/api-docs/)
+[Coverage](https://pasoul.github.io/jtools/lcov-report/)
+
 ### 如何使用:
 
 1. 直接下载 `dist` 目录下的 `jtools.min.js` 使用，支持 UMD 通用模块规范
