@@ -6,6 +6,9 @@ import { entitiestoUtf16 } from "../.internal/entitiestoUtf16";
  * @param {string} str 需要编译/转义的字符串
  * @param {string} type encode 编译 decode 转义
  * @returns {string} 编译/转义后的字符串
+ * @example
+ * handleText("<br>&nbsp;&lt;&gt;", "encode") => "\n <>"
+ * handleText("\n <>", "decode") => "<br>&nbsp;&lt;&gt;"
  */
 export function handleText(str = "", type = "encode") {
   if (!str) return "";

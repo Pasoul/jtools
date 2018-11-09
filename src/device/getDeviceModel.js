@@ -9,4 +9,5 @@ export function getDeviceModel() {
   } else if (/iPhone|iPad|iPod/i.test(ua)) {
     return 'ios';
   }
+  return 'Unknown';
 };
