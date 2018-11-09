@@ -1,6 +1,6 @@
 {
   "name": "jlb-tools",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "js工具库",
   "main": "dist/jtools.runtime.common.js",
   "module": "dist/jtools.runtime.esm.js",
@@ -19,7 +19,11 @@
     "jtools",
     "util",
     "common",
-    "tool"
+    "tool",
+    "py419569317",
+    "py",
+    "zqs",
+    "TiAmoYz"
   ],
   "author": "py419569317",
   "devDependencies": {
