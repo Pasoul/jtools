@@ -5,6 +5,10 @@ const uglify = require("uglify-js");
 const zlib = require("zlib");
 const ora = require("ora");
 const chalk = require("chalk");
+const copy = require('copy')
+const rimraf = require("rimraf");
+
+const rootPath = path.resolve(__dirname, '../')
 
 if (!fs.existsSync("dist")) {
   fs.mkdirSync("dist");
@@ -31,12 +35,14 @@ function build(builds) {
           next();
         } else {
           spinner.stop();
+          copyJsToLib();
         }
       })
       .catch(logError);
   };
   next();
 }
+
 // 构建打包任务
 function buildEntry(config) {
   const output = config.output;
@@ -75,6 +81,41 @@ function write(dest, code, zip) {
       }
     });
   });
+}
+
+function copyJsToLib() {
+
+}
+
+// copy代码到lib目录下
+function copyJsToLib() {
+  let copying = ora("copying... \n");
+  copying.start();
+  rimraf(path.resolve(rootPath, "lib/*.js"), (err) => {
+    if(err) throw(err);
+    let folderList = fs.readdirSync(path.resolve(rootPath, "src"));
+    folderList.forEach((item, index) => {
+      if (item === '.internal') {
+        copy(`src/.internal/*`, path.resolve(rootPath, "lib/.internal"),  (err, files) => {
+          if(err) throw err;
+        })
+      } else if (!/index.js/.test(item)) {
+        let folderList1 = fs.readdirSync(path.resolve(rootPath, `src/${item}`));
+        folderList1.forEach(itemChild => {
+          if (!/index.js/.test(itemChild)) {
+            fs.readFile(path.resolve(rootPath, `src/${item}/${itemChild}`), (err,data) => {
+              const handleContent = data.toString().replace(/\.\.\/\.internal/g,"./.internal");
+              fs.writeFileSync(path.resolve(rootPath, `lib/${itemChild}`), handleContent)
+            })
+          }
+        })
+        if (index === folderList.length - 1) {
+          console.log(chalk.cyan("Copy complete \n"));
+          copying.stop();
+        }
+      }
+    });
+  })
 }
 
 function getSize(code) {

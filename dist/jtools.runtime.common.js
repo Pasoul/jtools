@@ -1,5 +1,5 @@
 /*!
- * jtools v0.0.3
+ * jtools v0.0.8
  * jlb web team
  */
 'use strict';
@@ -1243,6 +1243,8 @@ function getImgBase64(url) {
   });
 }
 
+var getImgBase64_1 = getImgBase64;
+
 /**
  * 日期格式化
  * 时间规则：
@@ -1286,6 +1288,8 @@ function dateFormat1(value) {
     return month + "月" + date + "日   " + hour + ":" + min;
   }
 }
+
+var dateFormat1_1 = dateFormat1;
 
 var _stringWs = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u2003' +
   '\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
@@ -1386,7 +1390,56 @@ function dateFormat2(dateTimeStamp) {
   return result;
 }
 
-// 日期格式化
+var dateFormat2_1 = dateFormat2;
+
+// 7.2.2 IsArray(argument)
+
+var _isArray = Array.isArray || function isArray(arg) {
+  return _cof(arg) == 'Array';
+};
+
+// 22.1.2.2 / 15.4.3.2 Array.isArray(arg)
+
+
+_export(_export.S, 'Array', { isArray: _isArray });
+
+var isArray = _core.Array.isArray;
+
+var isArray$1 = isArray;
+
+/**
+ * 获取饿了么框架时间选择器时间戳
+ * @param {*} time 时间
+ * @param {*} type 类型  默认值 0  0 开始时间  1  结束时间
+ * @return {number|string|null} 时间戳
+ */
+function elDateFormat(time) {
+  var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+  if (!time) {
+    return null;
+  }
+
+  var timeStamp = null;
+
+  if (isArray$1(time) && time.length > 0) {
+    if (type == 1) {
+      timeStamp = Math.floor(new Date(new Date(time[type]).setHours(23, 59, 59, 0)) / 1000);
+    } else {
+      timeStamp = Math.floor(new Date(new Date(time[type]).setHours(0, 0, 0, 0)) / 1000);
+    }
+  } else if (isArray$1(time) && time.length == 0) {
+    return null;
+  } else if (!isArray$1(time)) {
+    timeStamp = Math.floor(new Date(time).getTime() / 1000);
+  } else {
+    return null;
+  }
+
+  return timeStamp;
+}
+
+var elDateFormat_1 = elDateFormat;
 
 /**
  * 获取浏览器类型和版本
@@ -1410,6 +1463,7 @@ function getBrowserModel() {
   if (sys.qq) return 'QQ:' + sys.qq;
   return 'Unknown';
 }
+var getBrowserModel_1 = getBrowserModel;
 
 /**
  * 获取手机操作系统类型
@@ -1423,9 +1477,79 @@ function getDeviceModel() {
   } else if (/iPhone|iPad|iPod/i.test(ua)) {
     return 'ios';
   }
+
+  return 'Unknown';
+}
+var getDeviceModel_1 = getDeviceModel;
+
+/**
+ * 删除对象里面value值为null的键值对
+ * @param {*} data 接口返回的blob数据
+ * @param {*} name excel名称
+ * @param {*} callBack 导出成功/失败回调  回调返回{type:fail/success}  fail情况下 返回{ type: "fail", code, msg }
+ */
+function exportXls(data) {
+  var name = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "jtools";
+  var callBack = arguments.length > 2 ? arguments[2] : undefined;
+
+  if (!data || data.size == 0) {
+    callBack && callBack({
+      type: "fail",
+      msg: "数据为空"
+    });
+    return false;
+  }
+
+  var reader = new FileReader();
+  reader.readAsText(data, "utf-8");
+
+  reader.onload = function (e) {
+    try {
+      var _JSON$parse = JSON.parse(reader.result),
+          code = _JSON$parse.code,
+          msg = _JSON$parse.msg;
+
+      if (code && code != 200) {
+        callBack && callBack({
+          type: "fail",
+          code: code,
+          msg: msg
+        });
+        return false;
+      } else {
+        _downFile(data, name);
+      }
+
+      callBack && callBack({
+        type: "success"
+      });
+    } catch (error) {
+      _downFile(data, name);
+
+      callBack && callBack({
+        type: "success"
+      });
+    }
+  };
 }
 
-// 设备环境信息
+function _downFile(data, fileName) {
+  var blob = new Blob([data], {
+    type: "application/vnd.ms-excel,charset=UTF-8"
+  });
+
+  if (window.navigator.msSaveOrOpenBlob) {
+    navigator.msSaveBlob(blob, fileName + ".xlsx");
+  } else {
+    var link = document.createElement("a");
+    link.href = window.URL.createObjectURL(blob);
+    link.download = fileName + ".xlsx";
+    link.click();
+    window.URL.revokeObjectURL(link.href);
+  }
+}
+
+var exportXls_1 = exportXls;
 
 /**
  * 图像处理获取缩略图
@@ -1482,6 +1606,8 @@ function getThumbnails() {
   }
 }
 
+var getThumbnails_1 = getThumbnails;
+
 /**
  * 获取默认头像
  * @param {*} userId
@@ -1493,7 +1619,7 @@ function getDefaultHeader(_ref) {
   return imageDomain + "/photo/user_header" + (userId || 0) % 10 + ".png";
 }
 
-// 处理oss静态资源
+var getDefaultAvatar = getDefaultHeader;
 
 /**
  * 检查是否是emoji表情
@@ -1504,6 +1630,7 @@ function isEmoji(value) {
   var arr = ["\uD83C[\uDF00-\uDFFF]", "\uD83D[\uDC00-\uDE4F]", "\uD83D[\uDE80-\uDEFF]"];
   return new RegExp(arr.join("|"), "g").test(value);
 }
+var isEmoji_1 = isEmoji;
 
 /**
  * 校验十八位身份证号码
@@ -1514,6 +1641,8 @@ function isIDCard(idcard) {
   var reg = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
   return reg.test(idcard);
 }
+
+var isIDCard_1 = isIDCard;
 
 /**
  * @description 检查是否为特殊字符
@@ -1526,6 +1655,19 @@ function isSpecialChar(value) {
   var regCn = /[·！#￥（——）：；“”‘、，|《。》？、【】[\]\s]/im;
   return regEn.test(value) || regCn.test(value);
 }
+
+var isSpecialChar_1 = isSpecialChar;
+
+/**
+ * 检查是否为正确手机号 1开头11位
+ * @param {*} value 正则校验变量
+ * @return {boolean} 正则校验结果
+ */
+function isMobile(value) {
+  return /^[1][0-9]{10}$/.test(value);
+}
+
+var isMobile_1 = isMobile;
 
 /**
  * utf16字符串转实体字符
@@ -1559,6 +1701,8 @@ function utf16toEntities(str) {
   return str;
 }
 
+var utf16toEntities_1 = utf16toEntities;
+
 /**
  * 实体字符转utf16字符串
  * @param {*} str 待解析的字符串
@@ -1573,7 +1717,7 @@ function entitiestoUtf16(str) {
   } // 检测出形如&#12345;形式的字符串
 
 
-  var strObj = utf16toEntities(str);
+  var strObj = utf16toEntities_1(str);
   var patt = /&#\d+;/g;
   var H, L, code;
   var arr = strObj.match(patt) || [];
@@ -1592,6 +1736,8 @@ function entitiestoUtf16(str) {
 
   return strObj;
 }
+
+var entitiestoUtf16_1 = entitiestoUtf16;
 
 /**
  * @description 处理emoji，用于把用utf16编码的字符转换成实体字符
@@ -1614,19 +1760,24 @@ function handleEmoji() {
   }
 
   if (type === "encode") {
-    return utf16toEntities(str);
+    return utf16toEntities_1(str);
   } else if (type === "decode") {
-    return entitiestoUtf16(str);
+    return entitiestoUtf16_1(str);
   } else {
     return str;
   }
 }
+
+var handleEmoji_1 = handleEmoji;
 
 /**
  * @description 处理文本，客户端无法识别h5的br标签和空格符，因此需要处理br标签为\n和空格符为 ''
  * @param {string} str 需要编译/转义的字符串
  * @param {string} type encode 编译 decode 转义
  * @returns {string} 编译/转义后的字符串
+ * @example
+ * handleText("<br>&nbsp;&lt;&gt;", "encode") => "\n <>"
+ * handleText("\n <>", "decode") => "<br>&nbsp;&lt;&gt;"
  */
 
 function handleText() {
@@ -1644,9 +1795,9 @@ function handleText() {
   var newStr = null;
 
   if (type === "encode") {
-    newStr = entitiestoUtf16(str).replace(/<br>/gi, "\n").replace(/&nbsp;/g, " ").replace("&lt;", "<").replace("&gt;", ">");
+    newStr = entitiestoUtf16_1(str).replace(/<br>/gi, "\n").replace(/&nbsp;/g, " ").replace("&lt;", "<").replace("&gt;", ">");
   } else if (type === "decode") {
-    newStr = utf16toEntities(str).replace("<", "&lt;").replace(">", "&gt;").replace(/\n|\r\n/g, "<br>").replace(/[ ]/g, "&nbsp;");
+    newStr = utf16toEntities_1(str).replace("<", "&lt;").replace(">", "&gt;").replace(/\n|\r\n/g, "<br>").replace(/[ ]/g, "&nbsp;");
   } else {
     return str;
   }
@@ -1654,15 +1805,118 @@ function handleText() {
   return newStr;
 }
 
-exports.getImgBase64 = getImgBase64;
-exports.dateFormat1 = dateFormat1;
-exports.dateFormat2 = dateFormat2;
-exports.getBrowserModel = getBrowserModel;
-exports.getDeviceModel = getDeviceModel;
-exports.getThumbnails = getThumbnails;
-exports.getDefaultHeader = getDefaultHeader;
-exports.isEmoji = isEmoji;
-exports.isIDCard = isIDCard;
-exports.isSpecialChar = isSpecialChar;
-exports.handleEmoji = handleEmoji;
-exports.handleText = handleText;
+var handleText_1 = handleText;
+
+// most Object methods by ES6 should accept primitives
+
+
+
+var _objectSap = function (KEY, exec) {
+  var fn = (_core.Object || {})[KEY] || Object[KEY];
+  var exp = {};
+  exp[KEY] = exec(fn);
+  _export(_export.S + _export.F * _fails(function () { fn(1); }), 'Object', exp);
+};
+
+// 19.1.2.14 Object.keys(O)
+
+
+
+_objectSap('keys', function () {
+  return function keys(it) {
+    return _objectKeys(_toObject(it));
+  };
+});
+
+var keys = _core.Object.keys;
+
+var keys$1 = keys;
+
+var $JSON = _core.JSON || (_core.JSON = { stringify: JSON.stringify });
+var stringify = function stringify(it) { // eslint-disable-line no-unused-vars
+  return $JSON.stringify.apply($JSON, arguments);
+};
+
+var stringify$1 = stringify;
+
+/**
+ * 删除对象里面value值为null的键值对
+ * @param {*} obj 需要处理的参数
+ * @return {object} 返回结果
+ */
+function handleParam() {
+  var obj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  if (stringify$1(obj) === "{}") return {};
+  var res = {};
+
+  var arr = keys$1(obj);
+
+  arr.forEach(function (item) {
+    if (obj[item] !== null) {
+      res[item] = obj[item];
+    }
+  });
+  return res;
+}
+
+var handleParam_1 = handleParam;
+
+// dateFormat
+// device
+// export
+// oss
+// reg
+// transfer
+
+var src = {
+  getImgBase64: getImgBase64_1,
+  dateFormat1: dateFormat1_1,
+  dateFormat2: dateFormat2_1,
+  elDateFormat: elDateFormat_1,
+  getBrowserModel: getBrowserModel_1,
+  getDeviceModel: getDeviceModel_1,
+  exportXls: exportXls_1,
+  getThumbnails: getThumbnails_1,
+  getDefaultAvatar: getDefaultAvatar,
+  isEmoji: isEmoji_1,
+  isIDCard: isIDCard_1,
+  isSpecialChar: isSpecialChar_1,
+  isMobile: isMobile_1,
+  handleEmoji: handleEmoji_1,
+  handleText: handleText_1,
+  handleParam: handleParam_1
+};
+var src_1 = src.getImgBase64;
+var src_2 = src.dateFormat1;
+var src_3 = src.dateFormat2;
+var src_4 = src.elDateFormat;
+var src_5 = src.getBrowserModel;
+var src_6 = src.getDeviceModel;
+var src_7 = src.exportXls;
+var src_8 = src.getThumbnails;
+var src_9 = src.getDefaultAvatar;
+var src_10 = src.isEmoji;
+var src_11 = src.isIDCard;
+var src_12 = src.isSpecialChar;
+var src_13 = src.isMobile;
+var src_14 = src.handleEmoji;
+var src_15 = src.handleText;
+var src_16 = src.handleParam;
+
+exports.default = src;
+exports.getImgBase64 = src_1;
+exports.dateFormat1 = src_2;
+exports.dateFormat2 = src_3;
+exports.elDateFormat = src_4;
+exports.getBrowserModel = src_5;
+exports.getDeviceModel = src_6;
+exports.exportXls = src_7;
+exports.getThumbnails = src_8;
+exports.getDefaultAvatar = src_9;
+exports.isEmoji = src_10;
+exports.isIDCard = src_11;
+exports.isSpecialChar = src_12;
+exports.isMobile = src_13;
+exports.handleEmoji = src_14;
+exports.handleText = src_15;
+exports.handleParam = src_16;

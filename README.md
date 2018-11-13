@@ -10,7 +10,7 @@
 
 前端 js 工具库: 封装常用的工具函数，如日期格式化、浏览器判断等，提高开发效率
 
-[Document](https://pasoul.github.io/jtools/api-docs/)  
+[Document](https://pasoul.github.io/jtools/api-docs/)
 
 [Coverage](https://pasoul.github.io/jtools/coverage/lcov-report/)
 
@@ -39,11 +39,20 @@ var jtools = require("jlb-tools");
 var result = jtools.add(1, 2);
 ```
 
-#### 按需加载
+#### es6
+
+```js
+import jtools from "jlb-tools";
+var result = jtools.add(1, 2);
+```
+
+### 按需加载
+
+结合[babel-plugin-import-load](https://github.com/Pasoul/babel-plugin-import-load)按需加载可以极大的减小依赖包的体积
 
 ```js
 import { add } from "jlb-tools";
-var result = jtools.add(1, 2);
+var result = add(1, 2);
 ```
 
 #### 自动化生成文档
