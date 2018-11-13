@@ -12,8 +12,6 @@
 
 [Document](https://pasoul.github.io/jtools/api-docs/)
 
-[Coverage](https://pasoul.github.io/jtools/coverage/lcov-report/)
-
 ### 如何使用:
 
 1. 直接下载 `dist` 目录下的 `jtools.min.js` 使用，支持 UMD 通用模块规范
