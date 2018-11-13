@@ -15,8 +15,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 package-lock.json
-api-docs
-coverage
+
 # editor default file
 .vscode
 .idea
