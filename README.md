@@ -12,6 +12,15 @@
 
 [Document](https://pasoul.github.io/jtools/api-docs/)
 
+## Todo
+
+- [x] 引入代码校验工具eslint
+- [x] jsdocs自动化生成api文档
+- [x] 测试覆盖率统计coverage
+- [x] 按需加载
+- [x] 支持浏览器环境，node环境、es6环境
+- [ ] Typescript
+
 ### 如何使用:
 
 1. 直接下载 `dist` 目录下的 `jtools.min.js` 使用，支持 UMD 通用模块规范
