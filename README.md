@@ -1,5 +1,6 @@
-![alt](https://images2.bestjlb.com/jlboss957712e1852c8020a567831f671123a515421668652141068.png 'logo')
-
+<div align="center">
+  <img src="https://images2.bestjlb.com/jlboss957712e1852c8020a567831f671123a515421668652141068.png">
+</div>
 [![Build Status](https://travis-ci.com/Pasoul/jtools.svg?branch=master)](https://travis-ci.com/Pasoul/jtools)
 [![Coverage Status](https://coveralls.io/repos/github/Pasoul/jtools/badge.svg?branch=master)](https://coveralls.io/github/Pasoul/jtools?branch=master)
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
@@ -14,11 +15,11 @@
 
 ## Todo
 
-- [x] 引入代码校验工具eslint
-- [x] jsdocs自动化生成api文档
-- [x] 测试覆盖率统计coverage
+- [x] 引入代码校验工具 eslint
+- [x] jsdocs 自动化生成 api 文档
+- [x] 测试覆盖率统计 coverage
 - [x] 按需加载
-- [x] 支持浏览器环境，node环境、es6环境
+- [x] 支持浏览器环境，node 环境、es6 环境
 - [ ] Typescript
 
 ### 如何使用:
