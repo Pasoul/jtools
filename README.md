@@ -21,7 +21,6 @@
 - [x] 测试覆盖率统计 coverage
 - [x] 按需加载
 - [x] 支持浏览器环境，node 环境、es6 环境
-- [ ] Typescript
 
 ### 如何使用:
 
