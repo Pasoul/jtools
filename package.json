@@ -1,6 +1,6 @@
 {
   "name": "jlb-tools",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "js工具库",
   "main": "dist/jtools.runtime.common.js",
   "module": "dist/jtools.runtime.esm.js",
@@ -10,9 +10,10 @@
     "es6-promise": "^4.2.5"
   },
   "scripts": {
-    "build": "node script/rollup.build.js",
     "test": "NODE_ENV=test karma start",
-    "doc": "jsdoc -r --readme README.md -c conf.json"
+    "doc": "jsdoc -r --readme README.md -c conf.json",
+    "build": "node script/rollup.build.js",
+    "build:doc": "gh-pages -d api-docs"
   },
   "repository": {
     "type": "git",
@@ -55,6 +56,7 @@
     "eslint-plugin-node": "^7.0.1",
     "eslint-plugin-promise": "^3.8.0",
     "eslint-plugin-standard": "^3.1.0",
+    "gh-pages": "^2.0.1",
     "karma": "^2.0.5",
     "karma-babel-preprocessor": "^7.0.0",
     "karma-chai": "^0.1.0",
@@ -74,6 +76,9 @@
     "rollup-plugin-commonjs": "^9.1.6",
     "rollup-plugin-json": "^3.0.0",
     "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-typescript": "^1.0.0",
+    "tslib": "^1.9.3",
+    "typescript": "^3.3.4000",
     "uglify-js": "^3.4.9",
     "webpack": "3.11.0",
     "zlib": "^1.0.5"
