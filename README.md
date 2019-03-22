@@ -12,7 +12,7 @@
 
 前端 js 工具库: 封装常用的工具函数，如日期格式化、浏览器判断等，提高开发效率
 
-[Document](https://jielibang.github.io/jtools/api-docs/)
+[Document](https://jielibang.github.io/jtools/index.html)
 
 ## Todo
 

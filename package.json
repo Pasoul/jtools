@@ -12,7 +12,7 @@
   "scripts": {
     "test": "NODE_ENV=test karma start",
     "doc": "jsdoc -r --readme README.md -c conf.json",
-    "build": "node script/rollup.build.js",
+    "build:lib": "node script/rollup.build.js",
     "build:doc": "gh-pages -d api-docs"
   },
   "repository": {
