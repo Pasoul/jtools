@@ -2,8 +2,8 @@
   <img src="https://images2.bestjlb.com/jlboss957712e1852c8020a567831f671123a515421668652141068.png">
 </div>
 
-[![Build Status](https://travis-ci.com/Pasoul/jtools.svg?branch=master)](https://travis-ci.com/Pasoul/jtools)
-[![Coverage Status](https://coveralls.io/repos/github/Pasoul/jtools/badge.svg?branch=master)](https://coveralls.io/github/Pasoul/jtools?branch=master)
+[![Build Status](https://travis-ci.org/jielibang/jtools.svg?branch=master)](https://travis-ci.org/jielibang/jtools)
+[![Coverage Status](https://coveralls.io/repos/github/jielibang/jtools/badge.svg?branch=master)](https://coveralls.io/github/jielibang/jtools?branch=master)
 [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://opensource.org/licenses/mit-license.php)
 [![Eclipse Marketplace](https://img.shields.io/eclipse-marketplace/dt/notepad4e.svg)](https://www.npmjs.com/package/jib-tools)
 ![NpmVersion](https://img.shields.io/npm/v/npm.svg)
@@ -12,7 +12,7 @@
 
 前端 js 工具库: 封装常用的工具函数，如日期格式化、浏览器判断等，提高开发效率
 
-[Document](https://pasoul.github.io/jtools/api-docs/)
+[Document](https://jielibang.github.io/jtools/api-docs/)
 
 ## Todo
 
@@ -21,7 +21,6 @@
 - [x] 测试覆盖率统计 coverage
 - [x] 按需加载
 - [x] 支持浏览器环境，node 环境、es6 环境
-- [ ] Typescript
 
 ### 如何使用:
 
