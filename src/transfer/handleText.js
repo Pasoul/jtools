@@ -1,5 +1,5 @@
-var utf16toEntities = require("../.internal/utf16toEntities");
-var entitiestoUtf16 = require("../.internal/entitiestoUtf16");
+var utf16toEntities = require("../_internal/utf16toEntities");
+var entitiestoUtf16 = require("../_internal/entitiestoUtf16");
 
 /**
  * @description 处理文本，客户端无法识别h5的br标签和空格符，因此需要处理br标签为\n和空格符为 ''

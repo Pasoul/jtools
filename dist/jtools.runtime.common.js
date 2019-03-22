@@ -1,5 +1,5 @@
 /*!
- * jtools v0.0.8
+ * jtools v0.0.11
  * jlb web team
  */
 'use strict';
@@ -1257,36 +1257,39 @@ var getImgBase64_1 = getImgBase64;
  * @return {*} 格式化后的日期
  */
 function dateFormat1(value) {
-  if (!value) return "";
-  var time = value * 1000;
-  var now = new Date().getTime();
-  var year = new Date(time).getFullYear();
-  var month = new Date(time).getMonth() + 1;
-  var date = new Date(time).getDate();
-  var hour = new Date(time).getHours();
-  var min = new Date(time).getMinutes();
-  var weekType = ["日", "一", "二", "三", "四", "五", "六"];
-  var week = "星期" + weekType[new Date(time).getDay()];
+  if (!value) {
+    return "";
+  } // let time = value * 1000;
+  // let now = new Date().getTime();
+  // let year = new Date(time).getFullYear();
+  // let month = new Date(time).getMonth() + 1;
+  // let date = new Date(time).getDate();
+  // let hour = new Date(time).getHours();
+  // let min = new Date(time).getMinutes();
+  // let weekType = ["日", "一", "二", "三", "四", "五", "六"];
+  // let week = "星期" + weekType[new Date(time).getDay()];
+  // if (min < 10) {
+  //   min = "0" + min;
+  // }
+  // if (hour < 10) {
+  //   hour = "0" + hour;
+  // }
+  // if (new Date().getDate() - new Date(time).getDate() === 0) {
+  //   return hour + ":" + min;
+  // } else if (new Date().getDate() - new Date(time).getDate() === 1) {
+  //   return "昨天 " + hour + ":" + min;
+  // } else if (
+  //   new Date().getTime() < new Date(time).getTime() &&
+  //   new Date().getDate() - new Date(time).getDate() < 7 &&
+  //   new Date().getDay() - new Date(time).getDay() > 0
+  // ) {
+  //   return week + hour + ":" + min;
+  // } else if (year < new Date(now).getFullYear()) {
+  //   return year + "年" + month + "月" + date + "日   " + hour + ":" + min;
+  // } else {
+  //   return month + "月" + date + "日   " + hour + ":" + min;
+  // }
 
-  if (min < 10) {
-    min = "0" + min;
-  }
-
-  if (hour < 10) {
-    hour = "0" + hour;
-  }
-
-  if (new Date().getDate() - new Date(time).getDate() === 0) {
-    return hour + ":" + min;
-  } else if (new Date().getDate() - new Date(time).getDate() === 1) {
-    return "昨天 " + hour + ":" + min;
-  } else if (new Date().getTime() < new Date(time).getTime() && new Date().getDate() - new Date(time).getDate() < 7 && new Date().getDay() - new Date(time).getDay() > 0) {
-    return week + hour + ":" + min;
-  } else if (year < new Date(now).getFullYear()) {
-    return year + "年" + month + "月" + date + "日   " + hour + ":" + min;
-  } else {
-    return month + "月" + date + "日   " + hour + ":" + min;
-  }
 }
 
 var dateFormat1_1 = dateFormat1;
@@ -1444,6 +1447,8 @@ var elDateFormat_1 = elDateFormat;
 /**
  * 获取浏览器类型和版本
  * @return {string}
+ * @example
+ * getBrowserModel() => "Chrome:70.0.3538.102"
  */
 function getBrowserModel() {
   var sys = {};
@@ -1451,18 +1456,19 @@ function getBrowserModel() {
   var s = null;
   /* eslint-disable */
 
-  (s = ua.match(/rv:([\d.]+)\) like gecko/)) ? sys.ie = s[1] : (s = ua.match(/msie ([\d\.]+)/)) ? sys.ie = s[1] : (s = ua.match(/edge\/([\d\.]+)/)) ? sys.edge = s[1] : (s = ua.match(/firefox\/([\d\.]+)/)) ? sys.firefox = s[1] : (s = ua.match(/(?:opera|opr).([\d\.]+)/)) ? sys.opera = s[1] : (s = ua.match(/chrome\/([\d\.]+)/)) ? sys.chrome = s[1] : (s = ua.match(/version\/([\d\.]+).*safari/)) ? sys.safari = s[1] : (s = ua.match(/micromessenger\/([\d\.]+)/)) ? sys.micromessenger = s[1] : (s = u.match(/QQ\/([\d\.]+)/gi)) ? sys.qq = s[1] : 0; // 根据关系进行判断
+  (s = ua.match(/rv:([\d.]+)\) like gecko/)) ? sys.ie = s[1] : (s = ua.match(/msie ([\d\.]+)/)) ? sys.ie = s[1] : (s = ua.match(/edge\/([\d\.]+)/)) ? sys.edge = s[1] : (s = ua.match(/firefox\/([\d\.]+)/)) ? sys.firefox = s[1] : (s = ua.match(/(?:opera|opr).([\d\.]+)/)) ? sys.opera = s[1] : (s = ua.match(/chrome\/([\d\.]+)/)) ? sys.chrome = s[1] : (s = ua.match(/version\/([\d\.]+).*safari/)) ? sys.safari = s[1] : (s = ua.match(/micromessenger\/([\d\.]+)/)) ? sys.micromessenger = s[1] : (s = ua.match(/QQ\/([\d\.]+)/gi)) ? sys.qq = s[1] : 0; // 根据关系进行判断
 
-  if (sys.ie) return 'IE:' + sys.ie;
-  if (sys.edge) return 'Edge:' + sys.edge;
-  if (sys.firefox) return 'Firefox:' + sys.firefox;
-  if (sys.chrome) return 'Chrome:' + sys.chrome;
-  if (sys.opera) return 'Opera:' + sys.opera;
-  if (sys.safari) return 'Safari:' + sys.safari;
-  if (sys.micromessenger) return 'Micromessenger:' + sys.micromessenger;
-  if (sys.qq) return 'QQ:' + sys.qq;
-  return 'Unknown';
+  if (sys.ie) return "IE:" + sys.ie;
+  if (sys.edge) return "Edge:" + sys.edge;
+  if (sys.firefox) return "Firefox:" + sys.firefox;
+  if (sys.chrome) return "Chrome:" + sys.chrome;
+  if (sys.opera) return "Opera:" + sys.opera;
+  if (sys.safari) return "Safari:" + sys.safari;
+  if (sys.micromessenger) return "Micromessenger:" + sys.micromessenger;
+  if (sys.qq) return "QQ:" + sys.qq;
+  return "Unknown";
 }
+
 var getBrowserModel_1 = getBrowserModel;
 
 /**
@@ -1612,9 +1618,14 @@ var getThumbnails_1 = getThumbnails;
  * 获取默认头像
  * @param {*} userId
  */
-function getDefaultHeader(_ref) {
-  var userId = _ref.userId,
+function getDefaultHeader() {
+  var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {
+    userId: 0,
+    imageDomain: ""
+  },
+      userId = _ref.userId,
       imageDomain = _ref.imageDomain;
+
   if (!imageDomain) return "";
   return imageDomain + "/photo/user_header" + (userId || 0) % 10 + ".png";
 }
@@ -1659,7 +1670,7 @@ function isSpecialChar(value) {
 var isSpecialChar_1 = isSpecialChar;
 
 /**
- * 检查是否为正确手机号 1开头11位
+ * 检查是否为正确手机号 1开头11位数字
  * @param {*} value 正则校验变量
  * @return {boolean} 正则校验结果
  */

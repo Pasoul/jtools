@@ -7,11 +7,18 @@ const ora = require("ora");
 const chalk = require("chalk");
 const copy = require('copy')
 const rimraf = require("rimraf");
+const gulp = require("gulp");
+const ts = require("gulp-typescript");
+const insert = require('gulp-insert');
+const rename = require("gulp-rename");
 
 const rootPath = path.resolve(__dirname, '../')
 
 if (!fs.existsSync("dist")) {
   fs.mkdirSync("dist");
+}
+if (!fs.existsSync("lib")) {
+  fs.mkdirSync("lib");
 }
 
 // 构建压缩包
@@ -83,39 +90,32 @@ function write(dest, code, zip) {
   });
 }
 
-function copyJsToLib() {
-
-}
-
 // copy代码到lib目录下
 function copyJsToLib() {
-  let copying = ora("copying... \n");
-  copying.start();
-  rimraf(path.resolve(rootPath, "lib/*.js"), (err) => {
-    if(err) throw(err);
-    let folderList = fs.readdirSync(path.resolve(rootPath, "src"));
-    folderList.forEach((item, index) => {
-      if (item === '.internal') {
-        copy(`src/.internal/*`, path.resolve(rootPath, "lib/.internal"),  (err, files) => {
-          if(err) throw err;
-        })
-      } else if (!/index.js/.test(item)) {
-        let folderList1 = fs.readdirSync(path.resolve(rootPath, `src/${item}`));
-        folderList1.forEach(itemChild => {
-          if (!/index.js/.test(itemChild)) {
-            fs.readFile(path.resolve(rootPath, `src/${item}/${itemChild}`), (err,data) => {
-              const handleContent = data.toString().replace(/\.\.\/\.internal/g,"./.internal");
-              fs.writeFileSync(path.resolve(rootPath, `lib/${itemChild}`), handleContent)
-            })
+  var tsProject = ts.createProject('tsconfig.json');
+  gulp.task("compile-ts", () => {
+    return tsProject.src()
+        .pipe(insert.transform((content, file) => {
+          if (content.search('../_internal') > -1) {
+            content = content.replace(/\.\.\/\_internal/g,"./_internal");
           }
-        })
-        if (index === folderList.length - 1) {
-          console.log(chalk.cyan("Copy complete \n"));
-          copying.stop();
-        }
-      }
-    });
-  })
+          return content;
+        }))
+        .pipe(rename(function(path) {
+          // 更改模块路径，eg: transfer/handleEmoji
+          if (path.dirname !== '_internal') {
+            path.dirname = '';
+          }
+        }))
+        .pipe(tsProject())
+        // path.resolve(rootPath, "lib")
+        .js.pipe(gulp.dest("lib"));
+  });
+  gulp.start("compile-ts");
+  // 删除构建冗余项
+  if (fs.existsSync(".rpt2_cache")) {
+    rimraf(".rpt2_cache", () => {})
+  }
 }
 
 function getSize(code) {

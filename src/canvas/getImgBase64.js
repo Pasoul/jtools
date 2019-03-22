@@ -5,7 +5,7 @@
  */
 function getImgBase64(url) {
   /* eslint-disable */
-  var Img = new Image(),
+  let Img = new Image(),
     dataURL = "";
   Img.setAttribute("crossOrigin", "anonymous");
   Img.src = url;

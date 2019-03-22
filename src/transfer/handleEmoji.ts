@@ -1,5 +1,5 @@
-var utf16toEntities = require("../.internal/utf16toEntities");
-var entitiestoUtf16 = require("../.internal/entitiestoUtf16");
+var decodeUtf16 = require("../_internal/utf16toEntities");
+var encodeUtf16 = require("../_internal/entitiestoUtf16");
 /**
  * @description 处理emoji，用于把用utf16编码的字符转换成实体字符
  * @param {string} str 需要编译/解析的字符串
@@ -16,9 +16,9 @@ function handleEmoji(str = "", type = "encode") {
     return str;
   }
   if (type === "encode") {
-    return utf16toEntities(str);
+    return decodeUtf16(str);
   } else if (type === "decode") {
-    return entitiestoUtf16(str);
+    return encodeUtf16(str);
   } else {
     return str;
   }

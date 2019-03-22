@@ -7,7 +7,6 @@
     "noUnusedLocals": true
   },
   "include": [
-    "types/**/*",
-    "src/**/*",
+    "src/**/*"
   ]
 }

@@ -12,7 +12,7 @@
   "scripts": {
     "test": "NODE_ENV=test karma start",
     "doc": "jsdoc -r --readme README.md -c conf.json",
-    "build:lib": "node script/rollup.build.js",
+    "build:lib": "rm -rf dist && rm -rf lib && node script/rollup.build.js",
     "build:doc": "gh-pages -d api-docs"
   },
   "repository": {
@@ -57,6 +57,10 @@
     "eslint-plugin-promise": "^3.8.0",
     "eslint-plugin-standard": "^3.1.0",
     "gh-pages": "^2.0.1",
+    "gulp": "3.9.1",
+    "gulp-insert": "^0.5.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-typescript": "^5.0.1",
     "karma": "^2.0.5",
     "karma-babel-preprocessor": "^7.0.0",
     "karma-chai": "^0.1.0",
@@ -76,8 +80,7 @@
     "rollup-plugin-commonjs": "^9.1.6",
     "rollup-plugin-json": "^3.0.0",
     "rollup-plugin-node-resolve": "^3.4.0",
-    "rollup-plugin-typescript": "^1.0.0",
-    "tslib": "^1.9.3",
+    "rollup-plugin-typescript2": "^0.20.1",
     "typescript": "^3.3.4000",
     "uglify-js": "^3.4.9",
     "webpack": "3.11.0",
