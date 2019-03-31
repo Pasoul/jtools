@@ -12,7 +12,7 @@
 function getThumbnails(
   opts = {
     src: "",
-    type: "",
+    type: 0,
     payload: {
       width: 750
     },
@@ -34,7 +34,7 @@ function getThumbnails(
   }
   return src;
 
-  function handleoss(oss) {
+  function handleoss(oss?: boolean) {
     if (type === 2 && !ifSelf) {
       return `${src}?x-oss-process=image/resize,w_${payload.width}/auto-orient,1`;
     } else if (type === 4 && !ifSelf) {

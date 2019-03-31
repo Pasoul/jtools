@@ -3,6 +3,7 @@
     "module": "CommonJS",
     "baseUrl": ".",
     "target": "es5",
+    "outDir": "compiler",
     "noImplicitThis": true,
     "noImplicitUseStrict": true,
     "noUnusedLocals": true

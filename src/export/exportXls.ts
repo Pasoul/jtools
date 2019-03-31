@@ -13,7 +13,7 @@ function exportXls(data, name = "jtools", callBack) {
   reader.readAsText(data, "utf-8");
   reader.onload = e => {
     try {
-      let { code, msg } = JSON.parse(reader.result);
+      let { code, msg } = JSON.parse(<string>reader.result);
       if (code && code != 200) {
         callBack && callBack({ type: "fail", code, msg });
         return false;

@@ -853,9 +853,9 @@ var _perform = function (exec) {
   }
 };
 
-var navigator = _global.navigator;
+var navigator$1 = _global.navigator;
 
-var _userAgent = navigator && navigator.userAgent || '';
+var _userAgent = navigator$1 && navigator$1.userAgent || '';
 
 var _promiseResolve = function (C, x) {
   _anObject(C);
@@ -1237,6 +1237,622 @@ function getImgBase64(url) {
   });
 }
 
+/**
+ * 日期格式化
+ * 时间规则：
+ * 今天显示：xx:xx
+ * 昨天显示：昨天 xx:xx
+ * 一周内显示：星期x xx:xx
+ * 一年内显示：xx月xx日 xx:xx
+ * 更早日期显示：xx年xx月xx日 xx:xx
+ * @param {*} value 时间戳，单位s
+ * @return {*} 格式化后的日期
+ */
+function dateFormat1(value) {
+  if (!value) {
+    return "";
+  }
+
+  var time = value * 1000;
+  var now = new Date().getTime();
+  var year = new Date(time).getFullYear();
+  var month = new Date(time).getMonth() + 1;
+  var date = new Date(time).getDate();
+  var hour = new Date(time).getHours();
+  var min = new Date(time).getMinutes();
+  var weekType = ["日", "一", "二", "三", "四", "五", "六"];
+  var week = "星期" + weekType[new Date(time).getDay()];
+
+  if (min < 10) {
+    min = "0" + min;
+  }
+
+  if (hour < 10) {
+    hour = "0" + hour;
+  }
+
+  if (new Date().getDate() - new Date(time).getDate() === 0) {
+    return hour + ":" + min;
+  } else if (new Date().getDate() - new Date(time).getDate() === 1) {
+    return "昨天 " + hour + ":" + min;
+  } else if (new Date().getTime() < new Date(time).getTime() && new Date().getDate() - new Date(time).getDate() < 7 && new Date().getDay() - new Date(time).getDay() > 0) {
+    return week + hour + ":" + min;
+  } else if (year < new Date(now).getFullYear()) {
+    return year + "年" + month + "月" + date + "日   " + hour + ":" + min;
+  } else {
+    return month + "月" + date + "日   " + hour + ":" + min;
+  }
+}
+
+var _stringWs = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u2003' +
+  '\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000\u2028\u2029\uFEFF';
+
+var space = '[' + _stringWs + ']';
+var non = '\u200b\u0085';
+var ltrim = RegExp('^' + space + space + '*');
+var rtrim = RegExp(space + space + '*$');
+
+var exporter = function (KEY, exec, ALIAS) {
+  var exp = {};
+  var FORCE = _fails(function () {
+    return !!_stringWs[KEY]() || non[KEY]() != non;
+  });
+  var fn = exp[KEY] = FORCE ? exec(trim) : _stringWs[KEY];
+  if (ALIAS) exp[ALIAS] = fn;
+  _export(_export.P + _export.F * FORCE, 'String', exp);
+};
+
+// 1 -> String#trimLeft
+// 2 -> String#trimRight
+// 3 -> String#trim
+var trim = exporter.trim = function (string, TYPE) {
+  string = String(_defined(string));
+  if (TYPE & 1) string = string.replace(ltrim, '');
+  if (TYPE & 2) string = string.replace(rtrim, '');
+  return string;
+};
+
+var _stringTrim = exporter;
+
+var $parseInt = _global.parseInt;
+var $trim = _stringTrim.trim;
+
+var hex = /^[-+]?0[xX]/;
+
+var _parseInt = $parseInt(_stringWs + '08') !== 8 || $parseInt(_stringWs + '0x16') !== 22 ? function parseInt(str, radix) {
+  var string = $trim(String(str), 3);
+  return $parseInt(string, (radix >>> 0) || (hex.test(string) ? 16 : 10));
+} : $parseInt;
+
+// 18.2.5 parseInt(string, radix)
+_export(_export.G + _export.F * (parseInt != _parseInt), { parseInt: _parseInt });
+
+var _parseInt$1 = _core.parseInt;
+
+var _parseInt$2 = _parseInt$1;
+
+/**
+ * 日期格式化
+ * 时间规则：
+ * 小于一分钟显示：刚刚
+ * 1分钟-60分钟内显示：xx分钟前
+ * 大于60分钟显示：xx小时前
+ * 昨天显示：昨天 xx:xx
+ * 更早日期显示：xx-xx-xx xx:xx
+ * @param {*} dateTimeStamp 时间戳，单位s
+ * @return {*} 格式化后的日期
+ */
+function dateFormat2(dateTimeStamp) {
+  if (!dateTimeStamp) return "";
+  dateTimeStamp = dateTimeStamp * 1000;
+  var minute = 1000 * 60; // 把分，时，天，周，半个月，一个月用毫秒表示
+
+  var hour = minute * 60;
+  var now = new Date().getTime(); // 获取当前时间毫秒
+
+  var result = "";
+  var diffValue = now - dateTimeStamp; // 时间差
+
+  if (diffValue < 0) {
+    return;
+  }
+
+  var minC = diffValue / minute; // 计算时间差的分，时，天，周，月
+
+  var hourC = diffValue / hour;
+  var datetime = new Date();
+  datetime.setTime(dateTimeStamp);
+  var Nyear = datetime.getFullYear();
+  var Nmonth = datetime.getMonth() + 1 < 10 ? "0" + (datetime.getMonth() + 1) : datetime.getMonth() + 1;
+  var Ndate = datetime.getDate() < 10 ? "0" + datetime.getDate() : datetime.getDate();
+  var Nhour = datetime.getHours() < 10 ? "0" + datetime.getHours() : datetime.getHours();
+  var Nminute = datetime.getMinutes() < 10 ? "0" + datetime.getMinutes() : datetime.getMinutes();
+
+  if (hourC >= 1 && hourC < 24) {
+    result = " " + _parseInt$2(String(hourC)) + "小时前";
+  } else if (hourC >= 24 && hourC < 48 && new Date().getDate() - Number(Ndate) === 1) {
+    result = "昨天 " + Nhour + ":" + Nminute;
+  } else if (minC >= 1 && minC < 60) {
+    result = " " + _parseInt$2(String(minC)) + "分钟前";
+  } else if (diffValue >= 0 && diffValue <= minute) {
+    result = "刚刚";
+  } else {
+    result = Nyear + "-" + Nmonth + "-" + Ndate + " " + Nhour + ":" + Nminute;
+  }
+
+  return result;
+}
+
+// 7.2.2 IsArray(argument)
+
+var _isArray = Array.isArray || function isArray(arg) {
+  return _cof(arg) == 'Array';
+};
+
+// 22.1.2.2 / 15.4.3.2 Array.isArray(arg)
+
+
+_export(_export.S, 'Array', { isArray: _isArray });
+
+var isArray = _core.Array.isArray;
+
+var isArray$1 = isArray;
+
+/**
+ * 获取饿了么框架时间选择器时间戳
+ * @param {*} time 时间
+ * @param {*} type 类型  默认值 0  0 开始时间  1  结束时间
+ * @return {number|string|null} 时间戳
+ */
+function elDateFormat(time, type) {
+  if (type === void 0) {
+    type = 0;
+  }
+
+  if (!time) {
+    return null;
+  }
+
+  var timeStamp = 0;
+
+  if (isArray$1(time) && time.length > 0) {
+    if (type == 1) {
+      timeStamp = Math.floor(Number(new Date(new Date(time[type]).setHours(23, 59, 59, 0))) / 1000);
+    } else {
+      timeStamp = Math.floor(Number(new Date(new Date(time[type]).setHours(0, 0, 0, 0))) / 1000);
+    }
+  } else if (isArray$1(time) && time.length == 0) {
+    return null;
+  } else if (!isArray$1(time)) {
+    timeStamp = Math.floor(new Date(time).getTime() / 1000);
+  } else {
+    return null;
+  }
+
+  return timeStamp;
+}
+
+/**
+ * 获取浏览器类型和版本
+ * @return {string}
+ * @example
+ * getBrowserModel() => "Chrome:70.0.3538.102"
+ */
+function getBrowserModel() {
+  var sys = {};
+  var ua = navigator.userAgent.toLowerCase();
+  var s = null;
+  /* eslint-disable */
+
+  (s = ua.match(/rv:([\d.]+)\) like gecko/)) ? sys.ie = s[1] : (s = ua.match(/msie ([\d\.]+)/)) ? sys.ie = s[1] : (s = ua.match(/edge\/([\d\.]+)/)) ? sys.edge = s[1] : (s = ua.match(/firefox\/([\d\.]+)/)) ? sys.firefox = s[1] : (s = ua.match(/(?:opera|opr).([\d\.]+)/)) ? sys.opera = s[1] : (s = ua.match(/chrome\/([\d\.]+)/)) ? sys.chrome = s[1] : (s = ua.match(/version\/([\d\.]+).*safari/)) ? sys.safari = s[1] : (s = ua.match(/micromessenger\/([\d\.]+)/)) ? sys.micromessenger = s[1] : (s = ua.match(/QQ\/([\d\.]+)/gi)) ? sys.qq = s[1] : 0; // 根据关系进行判断
+
+  if (sys.ie) return "IE:" + sys.ie;
+  if (sys.edge) return "Edge:" + sys.edge;
+  if (sys.firefox) return "Firefox:" + sys.firefox;
+  if (sys.chrome) return "Chrome:" + sys.chrome;
+  if (sys.opera) return "Opera:" + sys.opera;
+  if (sys.safari) return "Safari:" + sys.safari;
+  if (sys.micromessenger) return "Micromessenger:" + sys.micromessenger;
+  if (sys.qq) return "QQ:" + sys.qq;
+  return "Unknown";
+}
+
+/**
+ * 获取手机操作系统类型
+ * @return {string} ios android
+ */
+function getDeviceModel() {
+  var ua = navigator.userAgent;
+
+  if (/Android|BlackBerry|IEMobile/i.test(ua)) {
+    return "android";
+  } else if (/iPhone|iPad|iPod/i.test(ua)) {
+    return "ios";
+  }
+
+  return "Unknown";
+}
+
+/**
+ * 删除对象里面value值为null的键值对
+ * @param {*} data 接口返回的blob数据
+ * @param {*} name excel名称
+ * @param {*} callBack 导出成功/失败回调  回调返回{type:fail/success}  fail情况下 返回{ type: "fail", code, msg }
+ */
+function exportXls(data, name, callBack) {
+  if (name === void 0) {
+    name = "jtools";
+  }
+
+  if (!data || data.size == 0) {
+    callBack && callBack({
+      type: "fail",
+      msg: "数据为空"
+    });
+    return false;
+  }
+
+  var reader = new FileReader();
+  reader.readAsText(data, "utf-8");
+
+  reader.onload = function (e) {
+    try {
+      var _a = JSON.parse(reader.result),
+          code = _a.code,
+          msg = _a.msg;
+
+      if (code && code != 200) {
+        callBack && callBack({
+          type: "fail",
+          code: code,
+          msg: msg
+        });
+        return false;
+      } else {
+        _downFile(data, name);
+      }
+
+      callBack && callBack({
+        type: "success"
+      });
+    } catch (error) {
+      _downFile(data, name);
+
+      callBack && callBack({
+        type: "success"
+      });
+    }
+  };
+}
+
+function _downFile(data, fileName) {
+  var blob = new Blob([data], {
+    type: "application/vnd.ms-excel,charset=UTF-8"
+  });
+
+  if (window.navigator.msSaveOrOpenBlob) {
+    navigator.msSaveBlob(blob, fileName + ".xlsx");
+  } else {
+    var link = document.createElement("a");
+    link.href = window.URL.createObjectURL(blob);
+    link.download = fileName + ".xlsx";
+    link.click();
+    window.URL.revokeObjectURL(link.href);
+  }
+}
+
+/**
+ * 图像处理获取缩略图
+ * @param   {Object}  opts - 参数对象
+ * @param   {string}  opts.src - 处理源路径
+ * @param   {string}  opts.type - 处理类型 2:图片 4:视频
+ * @param   {string}  opts.payload - 负载参数: https://help.aliyun.com/document_detail/44688.html?spm=a2c4g.11186623.6.1148.4d7d176cZS0ozx
+ * @param   {boolean} opts.ifSelf - 返回源路径
+ * @param   {string}  opts.ossdomain - 图片对应的oss域名
+ * @returns {string} 处理后的图片路径
+ */
+function getThumbnails(opts) {
+  if (opts === void 0) {
+    opts = {
+      src: "",
+      type: 0,
+      payload: {
+        width: 750
+      },
+      ifSelf: true,
+      ossdomain: "https://images2.bestjlb.com/"
+    };
+  }
+
+  var src = opts.src,
+      type = opts.type,
+      payload = opts.payload,
+      ifSelf = opts.ifSelf,
+      ossdomain = opts.ossdomain;
+  if (!src) return "";
+  if (src.indexOf("?") > -1) return src;
+
+  if (src.indexOf(ossdomain) > -1) {
+    return src.indexOf("v2jlboss") > -1 ? handleoss(true) : handleoss();
+  } else {
+    if (src.indexOf("jlboss") > -1) {
+      return ossdomain + handleoss();
+    } else if (src.indexOf("v2jlboss") > -1) {
+      return ossdomain + handleoss(true);
+    }
+  }
+
+  return src;
+
+  function handleoss(oss) {
+    if (type === 2 && !ifSelf) {
+      return src + "?x-oss-process=image/resize,w_" + payload.width + "/auto-orient,1";
+    } else if (type === 4 && !ifSelf) {
+      if (oss) {
+        return src + ".jpeg?x-oss-process=image/format,jpg/resize,w_" + payload.width + "/auto-orient,1";
+      } else {
+        return src + "?x-oss-process=video/snapshot,t_1000,w_" + payload.width;
+      }
+    } else {
+      return src;
+    }
+  }
+}
+
+/**
+ * 获取默认头像
+ * @param {*} userId
+ */
+function getDefaultAvatar(_a) {
+  var _b = _a === void 0 ? {
+    userId: 0,
+    imageDomain: ""
+  } : _a,
+      userId = _b.userId,
+      imageDomain = _b.imageDomain;
+
+  if (!imageDomain) return "";
+  return imageDomain + "/photo/user_header" + (userId || 0) % 10 + ".png";
+}
+
+/**
+ * 检查是否是emoji表情
+ * @param {*} value 正则校验变量
+ * @return {boolean} 正则校验结果 true: 是emoji表情 false: 不是emoji表情
+ */
+function isEmoji(value) {
+  var arr = ["\uD83C[\uDF00-\uDFFF]", "\uD83D[\uDC00-\uDE4F]", "\uD83D[\uDE80-\uDEFF]"];
+  return new RegExp(arr.join("|"), "g").test(value);
+}
+
+/**
+ * 校验十八位身份证号码
+ * @param {*} idcard 身份证号码
+ * @return {boolean} 验证结果true/false
+ */
+function isIDCard(idcard) {
+  var reg = /^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/;
+  return reg.test(idcard);
+}
+
+/**
+ * @description 检查是否为特殊字符
+ * @author pengyong
+ * @param {string} value 正则校验的变量
+ * @returns {boolean} 正则校验结果 true: 是特殊字符 false: 不是特殊字符
+ */
+function isSpecialChar(value) {
+  var regEn = /[`~!@#$%^&*()_+<>?:"{},.\/;'[\]\s]/im;
+  var regCn = /[·！#￥（——）：；“”‘、，|《。》？、【】[\]\s]/im;
+  return regEn.test(value) || regCn.test(value);
+}
+
+/**
+ * 检查是否为正确手机号 1开头11位数字
+ * @param {*} value 正则校验变量
+ * @return {boolean} 正则校验结果
+ */
+function isMobile(value) {
+  return /^[1][0-9]{10}$/.test(value);
+}
+
+/**
+ * utf16字符串转实体字符
+ * @param {string} str 待编译的字符串
+ */
+function utf16toEntities(str) {
+  if (!str) return "";
+
+  if (typeof str !== "string") {
+    console.error("需要编译的数据类型需要是字符串类型");
+    return str;
+  }
+
+  var patt = /[\ud800-\udbff][\udc00-\udfff]/g; // 检测utf16字符正则
+
+  str = str.replace(patt, function (char) {
+    var H, L, code;
+
+    if (char.length === 2) {
+      H = char.charCodeAt(0); // 取出高位
+
+      L = char.charCodeAt(1); // 取出低位
+
+      code = (H - 0xd800) * 0x400 + 0x10000 + L - 0xdc00; // 转换算法
+
+      return "&#" + code + ";";
+    } else {
+      return char;
+    }
+  });
+  return str;
+}
+
+/**
+ * 实体字符转utf16字符串
+ * @param {*} str 待解析的字符串
+ */
+
+function entitiestoUtf16(str) {
+  if (!str) return "";
+
+  if (typeof str !== "string") {
+    console.error("需要解析的数据类型需要是字符串类型");
+    return str;
+  } // 检测出形如&#12345;形式的字符串
+
+
+  var strObj = utf16toEntities(str);
+  var patt = /&#\d+;/g;
+  var H, L, code;
+  var arr = strObj.match(patt) || [];
+
+  for (var i = 0; i < arr.length; i++) {
+    code = arr[i];
+    code = code.replace("&#", "").replace(";", ""); // 高位
+
+    H = Math.floor((code - 0x10000) / 0x400) + 0xd800; // 低位
+
+    L = (code - 0x10000) % 0x400 + 0xdc00;
+    code = "&#" + code + ";";
+    var s = String.fromCharCode(H, L);
+    strObj = strObj.replace(code, s);
+  }
+
+  return strObj;
+}
+
+/**
+ * @description 处理emoji，用于把用utf16编码的字符转换成实体字符
+ * @param {string} str 需要编译/解析的字符串
+ * @param {string} type encode 编译 decode 转义
+ * @returns {string} 编译/解析后的字符串
+ * @example
+ * handleEmoji("😃", "encode") => "&#128515;"
+ * handleEmoji("&#128522;", "decode") => "😊"
+ */
+
+function handleEmoji(str, type) {
+  if (str === void 0) {
+    str = "";
+  }
+
+  if (type === void 0) {
+    type = "encode";
+  }
+
+  if (!str) return "";
+
+  if (typeof str !== "string") {
+    console.error("handleEmoji数据类型需要是字符串类型");
+    return str;
+  }
+
+  if (type === "encode") {
+    return utf16toEntities(str);
+  } else if (type === "decode") {
+    return entitiestoUtf16(str);
+  } else {
+    return str;
+  }
+}
+
+/**
+ * @description 处理文本，客户端无法识别h5的br标签和空格符，因此需要处理br标签为\n和空格符为 ''
+ * @param {string} str 需要编译/转义的字符串
+ * @param {string} type encode 编译 decode 转义
+ * @returns {string} 编译/转义后的字符串
+ * @example
+ * handleText("<br>&nbsp;&lt;&gt;", "encode") => "\n <>"
+ * handleText("\n <>", "decode") => "<br>&nbsp;&lt;&gt;"
+ */
+
+function handleText(str, type) {
+  if (str === void 0) {
+    str = "";
+  }
+
+  if (type === void 0) {
+    type = "encode";
+  }
+
+  if (!str) return "";
+
+  if (typeof str !== "string") {
+    console.error("handleText数据类型需要是字符串类型");
+    return str;
+  }
+  /* eslint-disable no-unused-vars */
+
+
+  var newStr = null;
+
+  if (type === "encode") {
+    newStr = entitiestoUtf16(str).replace(/<br>/gi, "\n").replace(/&nbsp;/g, " ").replace("&lt;", "<").replace("&gt;", ">");
+  } else if (type === "decode") {
+    newStr = utf16toEntities(str).replace("<", "&lt;").replace(">", "&gt;").replace(/\n|\r\n/g, "<br>").replace(/[ ]/g, "&nbsp;");
+  } else {
+    return str;
+  }
+
+  return newStr;
+}
+
+// most Object methods by ES6 should accept primitives
+
+
+
+var _objectSap = function (KEY, exec) {
+  var fn = (_core.Object || {})[KEY] || Object[KEY];
+  var exp = {};
+  exp[KEY] = exec(fn);
+  _export(_export.S + _export.F * _fails(function () { fn(1); }), 'Object', exp);
+};
+
+// 19.1.2.14 Object.keys(O)
+
+
+
+_objectSap('keys', function () {
+  return function keys(it) {
+    return _objectKeys(_toObject(it));
+  };
+});
+
+var keys = _core.Object.keys;
+
+var keys$1 = keys;
+
+var $JSON = _core.JSON || (_core.JSON = { stringify: JSON.stringify });
+var stringify = function stringify(it) { // eslint-disable-line no-unused-vars
+  return $JSON.stringify.apply($JSON, arguments);
+};
+
+var stringify$1 = stringify;
+
+/**
+ * 删除对象里面value值为null的键值对
+ * @param {*} obj 需要处理的参数
+ * @return {object} 返回结果
+ */
+function handleParam(obj) {
+  if (obj === void 0) {
+    obj = {};
+  }
+
+  if (stringify$1(obj) === "{}") return {};
+  var res = {};
+
+  var arr = keys$1(obj);
+
+  arr.forEach(function (item) {
+    if (obj[item] !== null) {
+      res[item] = obj[item];
+    }
+  });
+  return res;
+}
+
 // canvas
 
-export { getImgBase64 };
+export { dateFormat1, dateFormat2, elDateFormat, exportXls, getBrowserModel, getDefaultAvatar, getDeviceModel, getImgBase64, getThumbnails, handleEmoji, handleParam, handleText, isEmoji, isIDCard, isMobile, isSpecialChar };

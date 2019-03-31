@@ -11,9 +11,9 @@ function elDateFormat(time, type = 0) {
   let timeStamp: number = 0;
   if (Array.isArray(time) && time.length > 0) {
     if (type == 1) {
-      timeStamp = Math.floor(new Date(new Date(time[type]).setHours(23, 59, 59, 0)) / 1000);
+      timeStamp = Math.floor(Number(new Date(new Date(time[type]).setHours(23, 59, 59, 0))) / 1000);
     } else {
-      timeStamp = Math.floor(new Date(new Date(time[type]).setHours(0, 0, 0, 0)) / 1000);
+      timeStamp = Math.floor(Number(new Date(new Date(time[type]).setHours(0, 0, 0, 0))) / 1000);
     }
   } else if (Array.isArray(time) && time.length == 0) {
     return null;
