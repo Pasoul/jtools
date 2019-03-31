@@ -2,6 +2,8 @@
 import { getImgBase64 } from "../src/index";
 import Promise from "es6-promise";
 Promise.polyfill();
+import chai from "chai";
+
 var expect = chai.expect;
 
 describe("测试图片转base64", () => {

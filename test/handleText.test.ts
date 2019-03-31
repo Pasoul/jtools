@@ -1,5 +1,7 @@
 /* eslint-disable no-undef */
 import { handleText } from "../src/index";
+import chai from "chai";
+
 var assert = chai.assert;
 
 describe("给字符串编译，用于客户端展示", () => {

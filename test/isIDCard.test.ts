@@ -1,5 +1,7 @@
 /* eslint-disable no-undef */
 import { isIDCard } from "../src/index";
+import chai from "chai";
+
 var assert = chai.assert;
 
 describe("校验18位身份证号码", () => {

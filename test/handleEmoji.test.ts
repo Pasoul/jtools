@@ -1,5 +1,7 @@
 /* eslint-disable no-undef */
 import { handleEmoji } from "../src/index";
+import chai from "chai";
+
 var assert = chai.assert;
 var expect = chai.expect;
 

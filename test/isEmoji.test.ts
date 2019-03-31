@@ -1,5 +1,7 @@
 /* eslint-disable no-undef */
 import { isEmoji } from "../src/index";
+import chai from "chai";
+
 var assert = chai.assert;
 
 describe("检查是否为emoji表情的测试", () => {

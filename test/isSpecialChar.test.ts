@@ -1,5 +1,7 @@
 /* eslint-disable no-undef */
 import { isSpecialChar } from "../src/index";
+import chai from "chai";
+
 var assert = chai.assert;
 
 describe("检查是否为特殊字符的测试", () => {

@@ -4,7 +4,7 @@ var webpack = require("webpack");
 var path = require("path");
 var webpackConfig = {
   resolve: {
-    extensions: [".js"],
+    extensions: [".js", ".ts"],
     alias: {
       "@": path.resolve(__dirname, "./src")
     }
@@ -12,8 +12,8 @@ var webpackConfig = {
   module: {
     rules: [
       {
-        test: /\.js$/,
-        loader: "babel-loader",
+        test: /\.ts$/,
+        loader: ["babel-loader", "ts-loader"],
         exclude: /node_modules/
       }
     ]
@@ -38,7 +38,7 @@ module.exports = function(config) {
 
     // 定义测试和被测代码文件
     // list of files / patterns to load in the browser
-    files: ["src/index.js", "test/*.test.js"],
+    files: ["src/index.ts", "test/*.test.ts"],
 
     // list of files / patterns to exclude
     exclude: [],
@@ -46,8 +46,8 @@ module.exports = function(config) {
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     // 配置预处理器，哪些文件需要统计测试覆盖率
     preprocessors: {
-      "./src/index.js": ["webpack", "sourcemap"],
-      "./test/*.js": ["webpack", "sourcemap"]
+      "./src/index.ts": ["webpack", "sourcemap"],
+      "./test/*.ts": ["webpack", "sourcemap"]
     },
     webpack: webpackConfig,
     webpackMiddleware: {

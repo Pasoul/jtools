@@ -1,5 +1,7 @@
 /* eslint-disable */
 import { isMobile } from "../src/index";
+import chai from "chai";
+
 var expect = chai.expect;
 
 describe("判断是否合法手机号", () => {

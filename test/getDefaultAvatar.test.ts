@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 import { getDefaultAvatar } from "../src/index";
+import chai from "chai";
 var assert = chai.assert;
 
 describe("异常流程测试", () => {

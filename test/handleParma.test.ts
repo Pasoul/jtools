@@ -1,5 +1,7 @@
 /* eslint-disable no-undef */
 import { handleParam } from "../src/index";
+import chai from "chai";
+
 var expect = chai.expect;
 
 describe("删除对象里面value值为null的键值对", () => {

@@ -1,5 +1,7 @@
 /* eslint-disable no-undef */
 import { getDeviceModel } from "../src/index";
+import chai from "chai";
+
 var assert = chai.assert;
 
 describe("获取手机操作系统类型校验", () => {
