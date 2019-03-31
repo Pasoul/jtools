@@ -119,7 +119,9 @@ function copyJsToLib() {
         .js.pipe(gulp.dest("lib"))
     );
   });
-  gulp.start("compile-ts");
+  gulp.start("compile-ts", () => {
+    rimraf("lib/index.js", () => {});
+  });
   // 删除构建冗余项
   if (fs.existsSync(".rpt2_cache")) {
     rimraf(".rpt2_cache", () => {});
