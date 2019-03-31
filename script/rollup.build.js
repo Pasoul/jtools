@@ -5,14 +5,14 @@ const uglify = require("uglify-js");
 const zlib = require("zlib");
 const ora = require("ora");
 const chalk = require("chalk");
-const copy = require('copy')
+const copy = require("copy");
 const rimraf = require("rimraf");
 const gulp = require("gulp");
 const ts = require("gulp-typescript");
-const insert = require('gulp-insert');
+const insert = require("gulp-insert");
 const rename = require("gulp-rename");
 
-const rootPath = path.resolve(__dirname, '../')
+const rootPath = path.resolve(__dirname, "../");
 
 if (!fs.existsSync("dist")) {
   fs.mkdirSync("dist");
@@ -58,7 +58,8 @@ function buildEntry(config) {
   return rollup
     .rollup(config)
     .then(bundle => bundle.generate(output))
-    .then(({ code }) => {
+    .then(res => {
+      let code = res.output[0].code;
       if (isProd) {
         var minified = (banner ? banner + "\n" : "") + uglify.minify(code).code;
         return write(file, minified, true);
@@ -92,29 +93,36 @@ function write(dest, code, zip) {
 
 // copy代码到lib目录下
 function copyJsToLib() {
-  var tsProject = ts.createProject('tsconfig.json');
+  var tsProject = ts.createProject("tsconfig.json");
   gulp.task("compile-ts", () => {
-    return tsProject.src()
-        .pipe(insert.transform((content, file) => {
-          if (content.search('../_internal') > -1) {
-            content = content.replace(/\.\.\/\_internal/g,"./_internal");
-          }
-          return content;
-        }))
-        .pipe(rename(function(path) {
-          // 更改模块路径，eg: transfer/handleEmoji
-          if (path.dirname !== '_internal') {
-            path.dirname = '';
-          }
-        }))
+    return (
+      tsProject
+        .src()
+        .pipe(
+          insert.transform((content, file) => {
+            if (content.search("../_internal") > -1) {
+              content = content.replace(/\.\.\/\_internal/g, "./_internal");
+            }
+            return content;
+          })
+        )
+        .pipe(
+          rename(function(path) {
+            // 更改模块路径，eg: transfer/handleEmoji
+            if (path.dirname !== "_internal") {
+              path.dirname = "";
+            }
+          })
+        )
         .pipe(tsProject())
         // path.resolve(rootPath, "lib")
-        .js.pipe(gulp.dest("lib"));
+        .js.pipe(gulp.dest("lib"))
+    );
   });
   gulp.start("compile-ts");
   // 删除构建冗余项
   if (fs.existsSync(".rpt2_cache")) {
-    rimraf(".rpt2_cache", () => {})
+    rimraf(".rpt2_cache", () => {});
   }
 }
 

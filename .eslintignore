@@ -2,3 +2,4 @@ script/
 out/
 dist/
 coverage/
+lib/

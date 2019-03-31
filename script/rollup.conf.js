@@ -7,7 +7,7 @@ const nodeResolve = require("rollup-plugin-node-resolve");
 // npm包大多是commonjs规范，需要将commonjs模块转换为es6供rollup处理
 const commonjs = require("rollup-plugin-commonjs");
 const babel = require("rollup-plugin-babel");
-const typescript = require("rollup-plugin-typescript2");
+const typescript = require("rollup-plugin-typescript");
 const packageName = pkg.config.packageName;
 
 const resolve = p => {
@@ -19,20 +19,20 @@ const banner = "/*!\n" + " * jtools v" + pkg.version + "\n" + " * jlb web team\n
 // 分别编译三种运行环境的包:commonjs、es module、umd
 const builds = {
   common: {
-    entry: resolve("src/index.js"),
+    entry: resolve("src/index.ts"),
     dest: resolve(`${pkg.main}`),
     format: "cjs",
     banner
   },
   umd: {
-    entry: resolve("src/index.js"),
+    entry: resolve("src/index.ts"),
     dest: resolve(`dist/${packageName}.min.js`),
     format: "umd",
     moduleName: packageName, // 浏览器端打开，通过jtools.add调用
     banner
   },
   esm: {
-    entry: resolve("src/index.js"),
+    entry: resolve("src/index.ts"),
     dest: resolve(`${pkg.module}`),
     format: "es",
     banner
@@ -46,13 +46,13 @@ function getConfig(name) {
     input: opts.entry,
     plugins: [
       // 如果项目引入node_modules第三方插件，需要打开此配置
-      typescript({module: 'CommonJS'}),
-      commonjs({
-        extensions: ['.js', '.ts']
-      }),
       nodeResolve(),
+      typescript(),
+      commonjs({
+        extensions: [".js", ".ts"]
+      }),
       babel({
-        extensions: ['.js', '.ts'],
+        extensions: [".js", ".ts"],
         exclude: "node_modules/**",
         babelrc: false, // 不读取babelrc文件
         presets: [["@babel/env", { modules: false }]], // 设置modules: false,否则babel会在rollup处理之前，把模块转移成commonjs风格，导致tree-shake失败
@@ -73,7 +73,7 @@ function getConfig(name) {
       banner: opts.banner,
       name: opts.moduleName || packageName,
       // disabele warning: 'Using named and default exports together'
-      exports: "named",
+      exports: "named"
     }
   };
   return config;

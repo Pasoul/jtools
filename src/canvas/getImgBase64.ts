@@ -25,4 +25,5 @@ function getImgBase64(url) {
     };
   });
 }
-module.exports = getImgBase64;
+
+export { getImgBase64 };

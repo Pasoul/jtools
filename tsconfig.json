@@ -1,12 +1,11 @@
 {
   "compilerOptions": {
+    "module": "CommonJS",
     "baseUrl": ".",
-    "target": "es6",
+    "target": "es5",
     "noImplicitThis": true,
     "noImplicitUseStrict": true,
     "noUnusedLocals": true
   },
-  "include": [
-    "src/**/*"
-  ]
+  "include": ["src/**/*"]
 }
