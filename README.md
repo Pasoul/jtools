@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://images2.bestjlb.com/jlboss957712e1852c8020a567831f671123a515421668652141068.png">
+  <img src="https://pengy.oss-cn-hangzhou.aliyuncs.com/github/jlb-tools-logo.png">
 </div>
 
 [![Build Status](https://travis-ci.org/jielibang/jtools.svg?branch=master)](https://travis-ci.org/jielibang/jtools)
